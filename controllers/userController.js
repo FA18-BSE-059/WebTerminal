@@ -54,7 +54,7 @@ router.post('/login',async function (req,res){
 });
 router.get('/logout',(req, res) => {
     req.session.user = null;
-    res.redirect("/logout")
+    res.redirect("/login")
 })
 function handleValidationError(err, body) {
     for (field in err.errors) {

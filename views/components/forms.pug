@@ -38,7 +38,7 @@ mixin radio-inline(text,name,id, is_checked)
 //- Submit button
 mixin submit(text,name,id,_class)
     .form-group
-        button(class=["btn","btn-default",_class], type="submit",name=name,id=id)= text
+        button(class=["btn",_class], type="submit",name=name,id=id)= text
 
 //- Input group - both prepend and append options available, and block is passed
 mixin input-group(prepend,append)

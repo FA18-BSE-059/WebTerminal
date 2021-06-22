@@ -8,3 +8,4 @@ mongoose.connect(process.env.MONGO_URL, {
     else { console.log('Error in DB connection : ' + err) }
 });
 require('../models/user');
+require('../models/product');

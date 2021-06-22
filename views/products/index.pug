@@ -1,0 +1,32 @@
+extends ../layouts/base
+
+include ../components/forms
+
+block content
+    section.content-header.d-flex.justify-content-between
+        h3
+            | Products
+            a(href="/products/add", class=["btn", "btn-success", "pull-right"]) Add New Product
+    section.content
+        .box
+            .box-body
+                table.table.table-bordered.table-striped
+                    thead
+                        tr
+                            th Name
+                            th Description
+                            th Price
+                            th Action
+                    tbody
+                        if list.length > 0
+                            each product in list
+                                tr
+                                    td=product.name
+                                    td=product.description
+                                    td=product.price
+                                    td.mx-auto
+                                        a(href="/products/" + product._id + "/edit", class="btn btn-warning ") Edit
+                                        a(href="/products/" + product._id + "/delete", class="btn btn-danger delete") Delete
+                        else
+                            tr
+                                td(colspan=6, class=["text-center"]) No Record Found

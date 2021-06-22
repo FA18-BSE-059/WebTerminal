@@ -1,0 +1,18 @@
+extends ../layouts/base
+
+include ../components/forms
+
+block content
+    section.content-header
+        h1
+            | Edit Product
+    section.content
+        .box
+            form(action="/products/"+_id, method="post")
+                input(type="hidden", name="_method", value="PUT")
+                .box-body
+                    +input("text","name","Name","Name","name",name,nameError)
+                    +input("text","description","Description","Description","description",description,descriptionError)
+                    +input("text","price","Price","Price","price",price,priceError)
+                .box-footer
+                    +submit("Add Product","","add_product","btn-success float-right")

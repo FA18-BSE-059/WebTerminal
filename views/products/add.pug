@@ -1,0 +1,17 @@
+extends ../layouts/base
+
+include ../components/forms
+
+block content
+    section.content-header
+        h1
+            | Add Product
+    section.content
+        .box
+            form(action="/products/add", method="post")
+                .box-body
+                    +input("text","name","Name","Name","name","",nameError)
+                    +input("text","description","Description","Description","description","",descriptionError)
+                    +input("text","price","Price","Price","price","",priceError)
+                .box-footer
+                    +submit("Add Product","","add_product","btn-success float-right")
