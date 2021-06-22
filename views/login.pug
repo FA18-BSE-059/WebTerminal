@@ -4,17 +4,19 @@ include components/forms
 block content
     .login-box
         .login-logo
-            b Admin
-            | LTE
+            b FA18-BSE-059
+            br
+            | Terminal Exam
         .card
             .card-body.login-card-body
                 p.login-box-msg Sign in to start your session
                 form(action="/login", method="post")
-                    .input-group.mb-3
+                    .input-group.mb-1
                         .input-group-append
                             .input-group-text.h-100
                                 .fa.fa-envelope.my-auto
                         +input-simple("email","email","Email","email")
+                    span.text-denger.mb-2 #{emailError}
                     .input-group.mb-3
                         .input-group-append
                             .input-group-text.h-100

@@ -2,21 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-
-// All Data
-router.get('/',function (req,res){
-    Faculty.find((err,doc) => {
-        if (!err) {
-            res.render('faculty/index',{
-                list: doc
-            });
-        }
-        else {
-            console.log('Error in retrieving employee list :' + err);
-        }
-    })
-});
-
 // Create Form
 router.get('/signup',function (req,res){
     return res.render("signup");
@@ -35,7 +20,7 @@ router.post('/signup',function (req,res){
     user.password = req.body.password;
     user.save((err, doc) => {
         if (!err)
-            return res.redirect("/dashboard")
+            return res.redirect("/login")
         else {
             console.log(err.name)
             if (err.name === 'ValidationError') {
@@ -54,52 +39,23 @@ router.post('/signup',function (req,res){
 });
 
 // Store Value
-router.post('/login',function (req,res){
-    User.find({email: req.body.email, password: req.body.password},'email password', (err, doc) => {
-        if(!err){
-            // res.redirect("/dashboard");
-            console.log(err)
-        }else{
-            console.log(err);
-        }
-    })
-});
-
-// Show Update Form
-router.get('/:id/edit',function (req, res) {
-    Faculty.findById(req.params.id, (err, doc) => {
-        if (!err) {
-            res.render("faculty/update", doc);
-        }
+router.post('/login',async function (req,res){
+    let user = await User.findOne({
+        email: req.body.email,
+        password: req.body.password,
     });
+    if(user){
+        req.session.user = user;
+        res.redirect("/dashboard");
+    }else{
+        req.body['emailError'] = "Invalid Username/Password";
+        res.render('login');
+    }
 });
-
-// Update Record
-router.put('/:id',function (req, res) {
-    Faculty.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
-        if (!err) { res.redirect('/faculty'); }
-        else {
-            if (err.name == 'ValidationError') {
-                handleValidationError(err, req.body);
-                res.render("employee/addOrEdit", {
-                    viewTitle: 'Update Employee',
-                    employee: req.body
-                });
-            }
-            else
-                console.log('Error during record update : ' + err);
-        }
-    });
-});
-// Remove Record
-router.get('/delete/:id',function (req, res) {
-    Faculty.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            res.redirect('/faculty');
-        }
-        else { console.log('Error in employee delete :' + err); }
-    });
-});
+router.get('/logout',(req, res) => {
+    req.session.user = null;
+    res.redirect("/logout")
+})
 function handleValidationError(err, body) {
     for (field in err.errors) {
         switch (err.errors[field].path) {

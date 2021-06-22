@@ -10,16 +10,20 @@ require('dotenv').config();
 var router = require('./routes/index');
 var userRouter = require('./controllers/userController');
 var dashboard = require('./controllers/dashboard');
+var session = require("express-session");
+var sessionAuth = require("./middlewares/sessionAuth");
 
 var app = express();
 
+app.use(session({ secret: "FA18-BSE-059", cookie: { maxAge: 8640000 } }));
+app.use(sessionAuth);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
