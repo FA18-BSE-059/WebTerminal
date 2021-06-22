@@ -1,0 +1,33 @@
+extends layouts/app
+
+include components/forms
+block content
+    h5 Add User Record
+    form(action="/faculty", method="post")
+        .row
+            .col-md-6
+                +input("text","name","Name","Name","name",name,nameError)
+            .col-md-6
+                +input("email","email","Email","Email","email",email,emailError)
+            .col-md-6
+                p Gender:
+                .d-flex.justify-content-between.mt-2
+                    +radio-inline("Male", "gender", "male")
+                    +radio-inline("Female", "gender", "male")
+                    +radio-inline("Others", "gender", "other")
+            .col-md-6
+                .phone
+                    +input("text","","Phone","Phone","phone[]")
+                button(type="button", class=["btn", "btn-info", "mt-2"] id="add_phone") Add Phone
+            +input("text","address","Street Address","Street Address","street_address","",streetAddressError)
+            +input("text","city","City","City","city","",cityError)
+            +input("text","country","Country","Country","country","", countryError)
+            +input("text","course_code","Course Code","Course Code","course_code",course_code,courseCodeError)
+        +submit("Submit","submit","submit","btn-success")
+block scripts
+    script.
+        $(function () {
+            $('#add_phone').click(() => {
+                $('.phone').append("<input type='text' class='form-control mt-2'  name='phone[]' placeholder='Phone'>");
+            });
+        });

@@ -1,0 +1,30 @@
+extends layouts/app
+
+include components/forms
+block content
+    .login-box
+        .login-logo
+            b Admin
+            | LTE
+        .card
+            .card-body.login-card-body
+                p.login-box-msg Sign in to start your session
+                form(action="/login", method="post")
+                    .input-group.mb-3
+                        .input-group-append
+                            .input-group-text.h-100
+                                .fa.fa-envelope.my-auto
+                        +input-simple("email","email","Email","email")
+                    .input-group.mb-3
+                        .input-group-append
+                            .input-group-text.h-100
+                                .fa.fa-lock.my-auto
+                        +input-simple("password","password","Password","password")
+                    .row
+                        .col-8
+                            .icheck-primary
+                                input(type="checkbox", id="remember")
+                                label(for="remember") Remeber Me
+                        .col-4
+                            button(type="submit", class=["btn", "btn-primary", "btn-block"]) Sign In
+

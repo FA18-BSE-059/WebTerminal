@@ -1,0 +1,47 @@
+extends ../layouts/app
+
+block content
+    div.d-flex.justify-content-between
+        h1(class=["animation", "a1"]) List of User Staff
+        a(href="/faculty/create", class=["btn", "btn-info", "float-right", "my-auto"]) Add User Record
+    table(class=["table", "table-striped"], id="list")
+        thead
+            tr
+                th Name
+                th Gender
+                th Email
+                th Address
+                th Course Code
+                th Phone Numbers
+                th Actions
+        tbody
+            if list.length >0
+                each faculty in list
+                    tr
+                        td=faculty.name
+                        td=faculty.gender
+                        td=faculty.email
+                        td=faculty.address.street_address+', ' + faculty.address.city + ', ' + faculty.address.country
+                        td=faculty.course_code
+                        td
+                            ul
+                                each phone in faculty.phone_numbers
+                                    li #{phone}
+                        td.mx-auto
+                            a(href="/faculty/" + faculty._id + "/edit", class="btn btn-warning ") Edit
+                            a(href="/faculty/delete/" + faculty._id, class="btn btn-danger delete") Delete
+            else
+                tr
+                    td(colspan=7, class=["text-center"]) No Record Found
+block scripts
+    script.
+        $(document).ready(function () {
+            $(".delete").click(function (e) {
+                event.preventDefault();
+                if(confirm("Are you sure you want to Delete the Record")){
+                    window.location.replace(e.currentTarget.href);
+                }
+            })
+        });
+
+

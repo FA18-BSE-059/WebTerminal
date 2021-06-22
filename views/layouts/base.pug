@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        link(rel='stylesheet', href='/css/_bootstrap.min.css')
+        include header
+    body.hold-transition.skin-blue.sidebar-mini
+        .wrapper
+            include navigation
+            include sidebar
+            .content-wrapper
+                block content
+            include footer
+            include js
