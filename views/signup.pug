@@ -2,32 +2,41 @@ extends layouts/app
 
 include components/forms
 block content
-    h5 Add User Record
-    form(action="/faculty", method="post")
-        .row
-            .col-md-6
-                +input("text","name","Name","Name","name",name,nameError)
-            .col-md-6
-                +input("email","email","Email","Email","email",email,emailError)
-            .col-md-6
-                p Gender:
-                .d-flex.justify-content-between.mt-2
-                    +radio-inline("Male", "gender", "male")
-                    +radio-inline("Female", "gender", "male")
-                    +radio-inline("Others", "gender", "other")
-            .col-md-6
-                .phone
-                    +input("text","","Phone","Phone","phone[]")
-                button(type="button", class=["btn", "btn-info", "mt-2"] id="add_phone") Add Phone
-            +input("text","address","Street Address","Street Address","street_address","",streetAddressError)
-            +input("text","city","City","City","city","",cityError)
-            +input("text","country","Country","Country","country","", countryError)
-            +input("text","course_code","Course Code","Course Code","course_code",course_code,courseCodeError)
-        +submit("Submit","submit","submit","btn-success")
-block scripts
-    script.
-        $(function () {
-            $('#add_phone').click(() => {
-                $('.phone').append("<input type='text' class='form-control mt-2'  name='phone[]' placeholder='Phone'>");
-            });
-        });
+    .login-box
+        .login-logo
+            b FA18-BSE-059
+            br
+            | Terminal Exam
+        .card
+            .card-body.login-card-body
+                p.login-box-msg Get Registered to get access of maximum Features
+                p.text-danger #{MongoError}
+                form(action="/signup", method="post")
+                    .input-group.mb-1
+                        .input-group-append
+                            .input-group-text.h-100
+                                .fa.fa-user.my-auto
+                        +input-simple("text","name","Name","name")
+                    span.text-danger.mb-2 #{nameError}
+                    .input-group.mb-1
+                        .input-group-append
+                            .input-group-text.h-100
+                                .fa.fa-envelope.my-auto
+                        +input-simple("email","email","Email","email")
+                    span.text-danger.mb-2 #{emailError}
+                    .input-group.mb-1.d-flex.justify-content-between
+                        p Gender:
+                        +radio-inline("Male", "gender", "male")
+                        +radio-inline("Female", "gender", "male")
+                        +radio-inline("Others", "gender", "other")
+                    span.text-danger.mb-1 #{genderError}
+                    .input-group.mb-1
+                        .input-group-append
+                            .input-group-text.h-100
+                                .fa.fa-lock.my-auto
+                        +input-simple("password","password","Password","password")
+                    span.text-danger.mb-2 #{passwordError}
+                    .row
+                        .col-12
+                            button(type="submit", class=["btn", "btn-primary", "btn-block"]) Sign Up
+

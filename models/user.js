@@ -3,22 +3,24 @@ var mongoose = require('mongoose');
 userScehma = new mongoose.Schema({
     name: {
         type: String,
-        required: "Name is required."
+        required: true
     },
     gender: {
         type: String,
         enum: [
             'Male', 'Female', 'Others'
         ],
-        required: 'Gender is Required'
+        required: true
     },
     email: {
         type: String,
-        required: 'Email is required'
+        required: true,
+        index: true,
+        unique: true,
     },
     password: {
         type: String,
-        required: 'Password is required'
+        required: true
     }
 });
 
